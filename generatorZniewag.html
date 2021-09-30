@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generator losowych zniewag</title>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+    <script>
+        let wybierzLosoweSlowo = function (slowa) {
+            return slowa[Math.floor(Math.random() * slowa.length)];
+        };
+
+        let generujLosowaZniewage = function () {
+            let losowaCzesciCiala = ["Twarz", "Noga", "Ręka"];
+            let losowyPrzymiotnik = ["Cuchnąca", "Nudna", "Głupia"];
+            let losoweSlowo = ["Mucha", "Kuna", "Glista", "Małpa", "Norka"];
+
+            let losowyLancuch = "Twoja " +  wybierzLosoweSlowo(losowaCzesciCiala) + " jest jak " + wybierzLosoweSlowo(losowyPrzymiotnik) + " " + wybierzLosoweSlowo(losoweSlowo) + "!!!";
+
+            return losowyLancuch;
+        };
+        function wyswietlZniewage () {
+            let czyWyswietlicZniewage = confirm("Czy chcesz usłyszeć zniewage?");
+            if (czyWyswietlicZniewage) {
+                let zniewaga = generujLosowaZniewage();
+                $("body").append("<h1>" + zniewaga + "</h1>");
+            };
+        };
+
+        setInterval(function () {
+            wyswietlZniewage()
+        }, 6000);
+    </script>
+</body>
+</html>

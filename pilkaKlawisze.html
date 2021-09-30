@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Piłka 2!</title>
+</head>
+
+<body>
+    <canvas id="plotno" width="400" height="400"></canvas>
+
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+    <script>
+        let plotno = document.getElementById("plotno");
+        let img = new Image();
+        img.src = 'treasuremap.webp';
+        let ctx = plotno.getContext("2d");
+        let szerokosc = plotno.width;
+        let wysokosc = plotno.height;
+        let liczba = 0;
+        let kolory = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Black", "Gold", "White"];
+        let gra1;
+        let gra2;
+        let liczbaCzasu = 1;
+
+        let czasomierz = function (doIlu) {
+            
+            let czasomierzPetla = setInterval(function () {
+                liczbaCzasu++;
+                
+                if (liczbaCzasu >= doIlu) {
+                    ctx.save();
+                    zakonczGre("GAME OVER");
+                    ctx.restore();
+                    clearInterval(czasomierzPetla);
+                }
+            }, 1000);
+        };
+
+        let rozpocznij = function () {
+            ctx.font = "30px Arial"
+            ctx.fillStyle = kolory[6];
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("Dotknij 10 razy dużego kółka!", szerokosc / 2, wysokosc / 2);
+            ctx.font = "13px Arial";
+            ctx.fillText("naciśnij tab żeby przyspieszyć albo Backspace żeby zwolnić.", szerokosc / 2, (wysokosc + 50) / 2);
+        };
+
+        let okrag = function (x, y, promien, wypelnijOkrag) {
+            ctx.beginPath();
+            ctx.arc(x, y, promien, 0, Math.PI * 2, false);
+            if (wypelnijOkrag) {
+                ctx.fill();
+            } else {
+                ctx.stroke();
+            }
+        };
+
+        let wyswietlLiczbe = function (liczba, x, y) {
+            ctx.font = "20px Courier";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            ctx.fillStyle = "White";
+            ctx.fillText(liczba, x, y);
+        };
+
+        let zakonczGre = function (tekst) {
+            clearInterval(gra1);
+            clearInterval(gra2);
+            ctx.font = "40px Comic Sans MS";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "White";
+            ctx.fillText(tekst, szerokosc / 2, wysokosc / 2);
+        };
+
+        let wylosujSlowo = function (slowa) {
+            return slowa[Math.floor(Math.random() * slowa.length)];
+        };
+
+        let Pilka = function () {
+            this.x = szerokosc / 2;
+            this.y = wysokosc / 2;
+            this.xSzybkosc = 5;
+            this.ySzybkosc = 0;
+        };
+
+        Pilka.prototype.przesuwaj = function (Pilka2) {
+            this.x += this.xSzybkosc;
+            this.y += this.ySzybkosc;
+            if (Pilka2) {
+                if (this.x > szerokosc) {
+                    pilka2.przemiesc();
+                }
+            } else {
+                if (this.x < 0) {
+                    this.x = szerokosc;
+                } else if (this.x > szerokosc) {
+                    this.x = 0;
+                } else if (this.y < 0) {
+                    this.y = wysokosc;
+                } else if (this.y > wysokosc) {
+                    this.y = 0;
+                };
+            }
+        };
+
+        Pilka.prototype.rysuj = function (drugaPilka) {
+            if (drugaPilka) {
+                okrag(this.x, this.y, 30, true);
+            } else {
+                okrag(this.x, this.y, 10, true);
+            }
+        };
+        Pilka.prototype.ustawKierunek = function (kierunek) {
+            if (kierunek === "gora") {
+                this.xSzybkosc = 0;
+                this.ySzybkosc = -5;
+            } else if (kierunek === "dol") {
+                this.xSzybkosc = 0;
+                this.ySzybkosc = 5;
+            } else if (kierunek === "lewa") {
+                this.xSzybkosc = -5;
+                this.ySzybkosc = 0
+            } else if (kierunek === "prawa") {
+                this.xSzybkosc = 5;
+                this.ySzybkosc = 0;
+            } else if (kierunek === "stop") {
+                this.xSzybkosc = 0;
+                this.ySzybkosc = 0;
+            } else if (kierunek === "tab") {
+                this.xSzybkosc += 3;
+            } else if (kierunek === "Backspace") {
+                this.xSzybkosc -= 3;
+            }
+        };
+        Pilka.prototype.porownaj = function (innaPilka) {
+            return (this.x <= innaPilka.x + 25 && this.x >= innaPilka.x - 25) && (this.y <= innaPilka.y + 25 && this.y >= innaPilka.y - 25);
+        };
+        Pilka.prototype.przemiesc = function () {
+            this.x = Math.floor(Math.random() * szerokosc - 10);
+            this.y = Math.floor(Math.random() * wysokosc - 25);
+        };
+
+        let Kwadrat = function (x, y, kierunek) {
+            this.x = x;
+            this.y = y;
+            this.kierunek = kierunek;
+        };
+
+        Kwadrat.prototype.rysuj = function () {
+            ctx.fillRect(this.x, this.y, 30, 30);
+        };
+
+        let pilka = new Pilka();
+        let pilka2 = new Pilka();
+        let kwadrat1 = new Kwadrat(0, 400, "prawo");
+
+        let klawisze = {
+            32: "stop",
+            37: "lewa",
+            38: "gora",
+            39: "prawa",
+            40: "dol",
+            9 : "tab",
+            8 : "Backspace" 
+        };
+
+        $("body").keydown(function (zdarzenie) {
+            let kierunek = klawisze[zdarzenie.keyCode];
+            pilka.ustawKierunek(kierunek);
+        });
+
+        rozpocznij();
+        let rozpoczecie = setTimeout(function () {
+            gra();
+        }, 4500);
+
+        function gra() {
+            czasomierz(41);
+            gra1 = setInterval(function () {
+                ctx.clearRect(0, 0, szerokosc, wysokosc);
+
+                ctx.drawImage(img, 0, 0);
+
+                pilka.rysuj(false);
+                pilka.przesuwaj(false);
+                pilka2.rysuj(true);
+                pilka2.przesuwaj(true);
+                kwadrat1.rysuj()
+                if (pilka.porownaj(pilka2)) {
+                    pilka2.przemiesc();
+                    liczba += 1
+                }
+
+                ctx.save();
+                wyswietlLiczbe(liczba, 10, 10);
+                wyswietlLiczbe(liczbaCzasu + "/40", 341, 10);
+                ctx.restore();
+
+                if (liczba >= 10) {
+                    ctx.save();
+                    zakonczGre("Wygrana!");
+                    ctx.restore();
+                    clearInterval(gra1);
+                    clearInterval(czasomierzPetla);
+                }
+
+                ctx.strokeRect(0, 0, szerokosc, wysokosc);
+            }, 30);
+
+            gra2 = setInterval(function () {
+                let kolor = wylosujSlowo(kolory);
+
+                ctx.fillStyle = kolor;
+            }, 500);
+        }
+    </script>
+</body>
+
+</html>

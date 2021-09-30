@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Znajdź ukryty skarb!</title>
+</head>
+
+<body>
+    <h1 id="nagłówek">Znajdź ukryty skarb!</h1>
+
+    <img id="mapa" width=1200 height=760 
+    src="https://nostarch.com/images/treasuremap.png">
+
+    <p id="odległość"></p>
+
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+    <script>
+        let uzyskajLosowaLiczbe = function (rozmiar) {
+            return Math.floor(Math.random() * rozmiar);
+        }
+        let obliczOdleglosc = function (zdarzenie, cel) {
+            let roznicaX = zdarzenie.offsetX - cel.x;
+            let roznicaY = zdarzenie.offsetY - cel.y;
+            return Math.sqrt((roznicaX * roznicaX) + (roznicaY * roznicaY));
+        }
+        skonstruujPodpowiedź = function (odległość) {
+            if (odległość < 10) {
+                return "Parzy!";
+            } else if (odległość < 20) {
+                return "Gorąco!";
+            } else if (odległość < 40) {
+                return "Ciepło";
+            } else if (odległość < 80) {
+                return "Letnio";
+            } else if (odległość < 160) {
+                return "Zimno";
+            } else if (odległość < 320) {
+                return "Mróz";
+            } else if (odległość < 400) {
+                return "Syberia!";
+            } else if (odległość < 500) {
+                return "Antarktyda!";
+            } else if (odległość < 600 ) {
+                return "Neptun!"
+            } else {
+                return "-10000000°!"
+            }
+        };
+
+        let szerokosc = 400;
+        let wysokosc = 400;
+        let klikniecia = 0;
+        let limitKlikniec = 70;
+
+        let cel = {
+            x: uzyskajLosowaLiczbe(szerokosc),
+            y: uzyskajLosowaLiczbe(wysokosc)
+        }
+
+        $("#mapa").click(function (zdarzenie) {
+            klikniecia++
+            let odległość = obliczOdleglosc(zdarzenie, cel);
+
+            let podpowiedz = skonstruujPodpowiedź(odległość);
+
+            $("#odległość").text(podpowiedz);
+
+            if (odległość < 8) {
+                alert("Skarb został znaleziony po " + klikniecia + " kliknięciach!");
+            }
+        });
+    </script>
+</body>
+</html>

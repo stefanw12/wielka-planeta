@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JAVASCRIPT</title>
+</head>
+<body>
+
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+    <script>
+        let czyPisać = confirm("czy chcesz pisać?");
+        if (czyPisać) {
+            let wyswietl = prompt("napisz tytuł tej strony");
+            let wpisanoTekst = false;
+            if (wyswietl != null) {
+                $("body").append("<h1>" + wyswietl + "</h1>");
+            }; for (let i = 0; i < 10; i++) {
+                let cos = prompt("Napisz dalszy tekst strony");
+                if (cos != null && cos.length > 0) {
+                    $("body").append("<p>" + cos + "</p>");
+                    wpisanoTekst = true;
+                }; 
+            };
+            if ((wyswietl == null || wyswietl.length == 0) && !wpisanoTekst) {
+                $("body").append("<p>Niczego nie wpisałeś. ale może zagrasz w którąś grę?</p>");
+            } else {
+                $("body").append("<p>Świetnie! może zagrasz w jakąś grę?</p>");
+                confirm("czy podobał ci się ten program?")
+                alert("Dzięki za opinie!")
+            }
+        };
+    </script>
+    <p><a href="file:///home/pi/javascript/html/Szubiennica.html" title="Szubienica napisana w javascript!">Kliknij tutaj</a> aby zagrać w Szubienice <a href="file:///home/pi/javascript/html/znajdzUkrytySkarb.html" title="gra z podpowiedziami typu Zimno Gorąco Parzy!">Albo tutaj</a> żeby zagrać w grę znajdz ukryty skarb!</p>
+</body>
+</html>

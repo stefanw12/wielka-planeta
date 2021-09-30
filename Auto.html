@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auta</title>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+    <script>
+        let Auto = function (x, y) {
+            this.x = x;
+            this.y = y;
+            this.rysuj()
+        };
+
+        Auto.prototype.rysuj = function () {
+            let autHtml = '<img src="http://nostarch.com/images/car.png">';
+
+            this.autoElement = $(autHtml);
+
+            this.autoElement.css({
+                postion: "absolute",
+                left: this.x,
+                top: this.y
+            });
+
+            $("body").append(this.autoElement);
+        };
+
+        let auto1 = new Auto(20, 20);
+        let auto2 = new Auto(100, 200);
+    </script>
+</body>
+</html>

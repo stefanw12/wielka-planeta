@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Szubienica!</title>
+</head>
+<body>
+    <h1>Szubienica!</h1>
+
+    <script>
+    let slowa = [
+        "javascript",
+        "mysz",
+        "niesamowity",
+        "lampart",
+        "człowiek",
+        "książka"
+    ];
+
+    let slowo = slowa[Math.floor(Math.random() * slowa.length)];
+
+    let odpowiedzi = [];
+    for (let i = 0; i < slowo.length; i++) {
+        odpowiedzi[i] = "_";
+    }
+
+    let pozostaleLitery = slowo.length;
+
+    while (pozostaleLitery > 0) {
+        alert(odpowiedzi.join(" "));
+
+        let strzal = prompt("Podaj literę lub kliknij Anuluj, aby zakończyć grę.");
+        if (strzal === null) {
+        break;
+        } else if (strzal.length !== 1){
+            alert("Proszę podaj tylko jedną literę.")
+        } else if (strzal in ["a", "e", "y", "u", "i", "o"]) { 
+            alert("Nie można wpisywać samogłosek");
+        } else {
+            for (let j = 0; j < slowo.length; j++) {
+                if (slowo[j] === strzal) {
+                    odpowiedzi[j] = strzal;
+                     pozostaleLitery--;
+                }
+            }
+        }
+
+    }
+
+    alert(odpowiedzi.join(" "));
+    alert("Dobra robota! Szukane słowo to " + slowo);
+    </script>
+
+</script>
+</body>
+</html>

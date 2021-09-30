@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html> 
+<head>
+    <title>Test</title>
+</head>
+
+<body>
+    <h1 id="naglowek">0</h1>
+    
+    <!--<superMario>super mario</superMario>-->
+
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+    <script>
+        let liczba = 0;
+        let symbole = "`~1!2@3#4$5%6^7&8*9(0)-_+=qQπ¬¡≠²³¢€½§·«»–¡¿£¼‰∧≈¾±°—wWœŒeEęĘrR©®tTß™yY←¥uU↓↑iI→↔oOóÓpPþÞ[{¨°]}~¯`˘aAąĄsSśŚdDðÐfFæÆgGŋŊhH’•jJəƏkK…/lLłŁ;:´˝'^ˇzZżŻxXźŹcCćĆvV„‘bB”“nNńŃmMµ∞,<≤×.>≥÷/?̣";
+        function przeliteruj(co) {
+                for(let i = 0; i < co.length; i++) {
+                    console.log(co[i]);
+                }
+                return("Koniec funkcji")
+            }
+        
+        /*$("html").mousemove(function (zdarzenie) {
+            $("#naglowek").offset({
+                left: zdarzenie.pageX,
+                top: zdarzenie.pageY
+            });
+        });*/
+        let obslugaKlikniecia = function (zdarzenie) {
+            $("#naglowek").offset({
+                left: zdarzenie.pageX,
+                top: zdarzenie.pageY
+            });
+            liczba++;
+            if (liczba < 21) {
+                $("#naglowek").text(liczba);
+            } else {
+                $("#naglowek").text("Koniec. Naciśnij przycisk odśwież albo klawisze ctrl i R aby zagrać ponownie.");
+            }
+        };
+
+        $("html").click(obslugaKlikniecia);
+
+        function breakPoint (howMany=1000) {
+            setTimeout(console.log(undefined), howMany);
+        };
+        function getRandomNumber (toHowMany=100) {
+            return Math.floor(Math.random() * toHowMany);
+        };
+        function getError (textError) {
+            if (textError !== undefined) {
+                console.error(`Syntax error: getError(${textError})`);
+                console.error("Error: getError is not a function");
+                return "SyntaxError";
+            } else {
+                console.log("TypeError: getError() missing 1 required positional argument: 'textError'");
+                return "TypeError"
+            }
+        };
+
+        $("body").keydown(function (zdarzenie) {
+            console.log(zdarzenie.keyCode);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pszczoła</title>
+</head>
+
+<body>
+    <canvas id="plotno" width="200" height="200"></canvas>
+
+    <script>
+        let plotno = document.getElementById("plotno");
+        let ctx = plotno.getContext("2d");
+        let x = 100;
+        let y = 100;
+
+        let okrag = function (x, y, promien, wypelnijOkrag) {
+            ctx.beginPath();
+            ctx.arc(x, y, promien, 0, Math.PI * 2, false);
+            if (wypelnijOkrag) {
+                ctx.fill();
+            } else {
+                ctx.stroke();
+            }
+        };
+        let rysujPszczole = function (x, y) {
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "Black";
+            ctx.fillStyle = "Gold";
+
+            okrag(x, y, 8, true);
+            okrag(x, y, 8, false);
+            okrag(x - 5, y - 11, 5, false);
+            okrag(x + 5, y - 11, 5, false);
+            okrag(x - 2, y - 1, 2, false);
+            okrag(x + 2, y - 1, 2, false);
+        };
+        let aktualizuj = function (wspolrzendna) {
+            let przesuniecie = Math.random() * 4 - 2;
+            wspolrzendna += przesuniecie;
+
+            if (wspolrzendna > 200) {
+                wspolrzendna = 200
+            }
+            if (wspolrzendna < 0) {
+                wspolrzendna = 0;
+            }
+
+            return wspolrzendna;
+        };
+        setInterval(function () {
+            ctx.clearRect(0, 0, 200, 200);
+
+            rysujPszczole(x, y);
+            x = aktualizuj(x);
+            y = aktualizuj(y);
+
+            ctx.strokeRect(0, 0, 200, 200);
+        }, 30);
+    </script>
+</body>
+</html>

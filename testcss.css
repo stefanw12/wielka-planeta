@@ -1,0 +1,23 @@
+h2 {
+    color: red;
+    width: 500px;
+    /*border: 1px solid black;*/
+}
+
+html {
+    background-color: brown;
+}
+
+body {
+  width: 600px;
+  margin: 0 auto;
+  background-color: #7700ff;
+  padding: 0 100px 100px 100px;
+  border: 5px solid rgb(112, 108, 108);
+}
+
+h1 {
+    margin: 0;
+    padding: 20px 0;
+    color: #3987;
+}
