@@ -30,7 +30,6 @@
             40: "dol",
             32: "odswiez"
         };
-        
         let kierunek = "";
         let predkoscRuchu = 0.3;
         let szerokoscEkranu = 1250;
@@ -182,7 +181,6 @@
             this.x = x;
             this.y = y;
             this.rozmiar = rozmiar;
-            this.predkosc = predkosc
         };
 
         Asteroida.prototype.rysuj = function () {
@@ -192,7 +190,7 @@
         };
 
         Asteroida.prototype.przesun = function () {
-            this.y += this.predkosc;
+            this.y += 10;
             if (this.y < wys) {
                 usun(this, asteroidy);
             }
@@ -409,6 +407,12 @@
         };
 
         gra(startTime);
+
+        setInterval(function () {
+            asteroidy.forEach(element => {
+                element.przesun();
+            });
+        }, 700);
     </script>
 </body>
 
