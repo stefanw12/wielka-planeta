@@ -253,7 +253,7 @@
 
         Asteroida.prototype.przesun = function () {
             this.y += 10;
-            if (this.y < wys) {
+            if (this.y > bufferHeight) {
                 usun(this, asteroidy);
             }
         };
