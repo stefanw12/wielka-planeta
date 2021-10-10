@@ -70,17 +70,17 @@
         //     init();
         let elem = document.getElementsByTagName("canvas")[0];
         elem.addEventListener('touchstart', process_touchstart, false);
-        elem.addEventListener('touchmove', process_touchmove, false);
-        elem.addEventListener('touchcancel', process_touchcancel, false);
-        elem.addEventListener('touchend', process_touchend, false);
+        // elem.addEventListener('touchmove', process_touchmove, false);
+        // elem.addEventListener('touchcancel', process_touchcancel, false);
+        // elem.addEventListener('touchend', process_touchend, false);
         function process_touchstart(ev) {
             switch (ev.touches.length) {
                 case 1: handle_one_touch(ev); break;
                 case 2: handle_two_touches(ev); break;
                 case 3: handle_three_touches(ev); break;
                 default: gesture_not_supported(ev); break;
+            }
         }
-        } 
 
         let startTime = Date.now();
         let plotno = document.getElementById("plotno");
@@ -123,7 +123,7 @@
         }
 
         const deviceType = () => {
-           const ua = navigator.userAgent;
+            const ua = navigator.userAgent;
             if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
                 return "tablet";
             }
@@ -176,12 +176,32 @@
             window.location.reload(true);
         };
 
-        function wlaczMenu () {
+        function wlaczMenu() {
             wyswietltekst("HEJ", 1000, ekranCenterX, ekranCenterY)
         }
 
-        //let gwiazda = new Gwiazda();
-        //let gwiazdy = [gwiazda];
+        let gwiazda = new Gwiazda();
+        let gwiazdy = [gwiazda];
+
+        let generujPlanete = function () {
+            let newX = 0;
+            let newY = 0;
+            let kolizjaGwiazdy = false;
+            let kolizjaPlanety = false;
+            let rozmiar = Math.floor(100 + Math.random() * 50);
+            do {
+                newX = Math.floor(Math.random() * bufferWidth);
+                newY = Math.floor(Math.random() * bufferHeight);
+                kolizjaGwiazdy = gwiazdy.some(gwiazda => {
+                    return pointInCircle(newX, newY, gwiazda.x, gwiazda.y, gwiazda.rozmiar, rozmiar);
+                });
+                kolizjaPlanety = planety.some(planeta => {
+                    return pointInCircle(newX, newY, planeta.x, planeta.y, planeta.rozmiar, rozmiar);
+                });
+            } while (kolizjaGwiazdy || kolizjaPlanety);
+            let planeta = new Planeta(newX, newY, rozmiar, Math.floor(50 + Math.random() * 50));
+            return planeta;
+        };
 
         let planety = [];
         for (let i = 0; i < 10; i++) {
@@ -208,7 +228,7 @@
 
         $("body").keyup(function (zdarzenie) {
             kierunek = "";
-        });a
+        });
 
         function ensureVehicleInBounds() {
             if (planeta.x < planeta.planetaRozmiar) {
@@ -240,6 +260,8 @@
                 worldY = -bufferHeight + ekranCenterY * 2;
             }
         }
+
+        let planeta = new Planeta(ekranCenterX - 500, ekranCenterY, 50);
 
         let gra = function (lastTime) {
             let time = Date.now();
@@ -294,6 +316,7 @@
             });
         }, 700);
     </script>
+
 </body>
 
 </html>

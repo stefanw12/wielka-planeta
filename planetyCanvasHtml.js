@@ -49,7 +49,7 @@ Planeta.prototype.przesun = function (kierunek, timeDiff) {
         }
     });
 
-    if (deviceType = "mobile") {
+    if (deviceType == "mobile") {
         if (!this.sprawdzCzyJestesWiekszyOdSceny()) {
             if (kierunek === "gora") {
                 this.y -= predkoscRuchu * timeDiff;
@@ -89,26 +89,4 @@ Planeta.prototype.sprawdzKolizje = function (x, y, promien, drugiObjektX, drugiO
 
 Planeta.prototype.sprawdzCzyJestesWiekszyOdSceny = function () {
     return gwiazdy.length === 0
-};
-
-let planeta = new Planeta(ekranCenterX - 500, ekranCenterY, 50);
-
-let generujPlanete = function () {
-    let newX = 0;
-    let newY = 0;
-    let kolizjaGwiazdy = false;
-    let kolizjaPlanety = false;
-    let rozmiar = Math.floor(100 + Math.random() * 50);
-    do {
-        newX = Math.floor(Math.random() * bufferWidth);
-        newY = Math.floor(Math.random() * bufferHeight);
-        kolizjaGwiazdy = gwiazdy.some(gwiazda => {
-            return pointInCircle(newX, newY, gwiazda.x, gwiazda.y, gwiazda.rozmiar, rozmiar);
-        });
-        kolizjaPlanety = planety.some(planeta => {
-            return pointInCircle(newX, newY, planeta.x, planeta.y, planeta.rozmiar, rozmiar);
-        });
-    } while (kolizjaGwiazdy || kolizjaPlanety);
-    let planeta = new Planeta(newX, newY, rozmiar, Math.floor(50 + Math.random() * 50));
-    return planeta;
 };
