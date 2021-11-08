@@ -16,6 +16,25 @@ Planeta.prototype.rysuj = function () {
     ctx.restore();
 };
 
+Planeta.prototype.sprawdzCzyJestesWiekszyOdSceny = function () {
+    return gwiazdy.length === 0
+};
+
+const deviceType = () => {
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        return "tablet";
+    }
+    else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+        return "mobile";
+    }
+    return "desktop";
+};
+
+let sterowanieDotykowe = function () {
+    console.log("ELO");
+};
+
 Planeta.prototype.przesun = function (kierunek, timeDiff) {
     asteroidy.forEach(element => {
         if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar)
@@ -49,8 +68,8 @@ Planeta.prototype.przesun = function (kierunek, timeDiff) {
         }
     });
 
-    if (deviceType == "mobile") {
-        if (!this.sprawdzCzyJestesWiekszyOdSceny()) {
+    if (deviceType() === "desktop") {
+        if (!this.sprawedzCzyJestesWiekszyOdSceny()) {
             if (kierunek === "gora") {
                 this.y -= predkoscRuchu * timeDiff;
             } else if (kierunek === "dol") {
@@ -71,22 +90,18 @@ Planeta.prototype.przesun = function (kierunek, timeDiff) {
         }
 
         if (kierunek === "zatrzymaj") {
-            //if (koniecGry = false) {
+            if (koniecGry = false) {
                 koniecGry = true;
                 wlaczMenu();
-            /*} else {
+            } else {
                 koniecgry = false;
-            }*/
+            }
         }
     } else {
-        //coś
+        sterowanieDotykowe();
     }
 };
 
 Planeta.prototype.sprawdzKolizje = function (x, y, promien, drugiObjektX, drugiObjektY, drugiObjektPromien) {
     return Math.sqrt(Math.pow(x - drugiObjektX, 2) + Math.pow(y - drugiObjektY, 2)) < promien + drugiObjektPromien;
-};
-
-Planeta.prototype.sprawdzCzyJestesWiekszyOdSceny = function () {
-    return gwiazdy.length === 0
 };
