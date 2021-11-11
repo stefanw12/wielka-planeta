@@ -62,14 +62,14 @@ Planeta.prototype.przesun = function (kierunek, timeDiff) {
 
     gwiazdy.forEach(element => {
         if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar)
-            && this.planetaRozmiar > element.rozmiar && asteroidy.length === 0 & ksiezyce.length === 0 & planety.length === 0) {
+        && asteroidy.length === 0 & ksiezyce.length === 0 & planety.length === 0) {
             this.planetaRozmiar += 200;
             usun(element, gwiazdy);
         }
     });
 
     if (deviceType() === "desktop") {
-        if (!this.sprawedzCzyJestesWiekszyOdSceny()) {
+        if (!this.sprawdzCzyJestesWiekszyOdSceny()) {
             if (kierunek === "gora") {
                 this.y -= predkoscRuchu * timeDiff;
             } else if (kierunek === "dol") {
