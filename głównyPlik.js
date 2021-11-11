@@ -136,17 +136,7 @@ $("body").keyup(function (zdarzenie) {
 $("body").bind("vmousedown", function (event) {
     let x = event.clientX;
     let y = event.clientY;
-    if (x < szerokoscEkranu / 3) {
-        kierunek = "lewa";
-    } else if (x > szerokoscEkranu * 2 / 3) {
-        kierunek = "prawa"
-    } else {
-        if (y < ekranCenterY) {
-            kierunek = "gora";
-        } else {
-            kierunek = "dol";
-        }
-    }
+    ustawKierunek(x, y);
 });
 
 $("body").bind("vmouseup", function (event) {
@@ -154,8 +144,28 @@ $("body").bind("vmouseup", function (event) {
 });
 
 $("body").bind("vmousemove", function (event) {
+    let x = event.clientX;
+    let y = event.clientY;
+    if(kierunek !== "") {
+        ustawKierunek(x, y);
+    }
+//    console.log(x + " " + y);
 //    kierunek = "";
 });
+
+function ustawKierunek(x, y) {
+    if (x < szerokoscEkranu / 3) {
+        kierunek = "lewa";
+    } else if (x > szerokoscEkranu * 2 / 3) {
+        kierunek = "prawa";
+    } else {
+        if (y < ekranCenterY) {
+            kierunek = "gora";
+        } else {
+            kierunek = "dol";
+        }
+    }
+}
 
 function ensureVehicleInBounds() {
     if (planeta.x < planeta.planetaRozmiar) {
