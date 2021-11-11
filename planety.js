@@ -32,7 +32,7 @@ const deviceType = () => {
 };
 
 let sterowanieDotykowe = function () {
-    console.log("ELO");
+    console.log("h");
 };
 
 Planeta.prototype.przesun = function (kierunek, timeDiff) {
