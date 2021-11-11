@@ -20,21 +20,6 @@ Planeta.prototype.sprawdzCzyJestesWiekszyOdSceny = function () {
     return gwiazdy.length === 0
 };
 
-const deviceType = () => {
-    const ua = navigator.userAgent;
-    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-        return "tablet";
-    }
-    else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
-        return "mobile";
-    }
-    return "desktop";
-};
-
-let sterowanieDotykowe = function () {
-    console.log("h");
-};
-
 Planeta.prototype.przesun = function (kierunek, timeDiff) {
     asteroidy.forEach(element => {
         if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar)
@@ -68,37 +53,33 @@ Planeta.prototype.przesun = function (kierunek, timeDiff) {
         }
     });
 
-    if (deviceType() === "desktop") {
-        if (!this.sprawdzCzyJestesWiekszyOdSceny()) {
-            if (kierunek === "gora") {
-                this.y -= predkoscRuchu * timeDiff;
-            } else if (kierunek === "dol") {
-                this.y += predkoscRuchu * timeDiff;
-            } else if (kierunek === "prawa") {
-                this.x += predkoscRuchu * timeDiff;
-            } else if (kierunek === "lewa") {
-                this.x -= predkoscRuchu * timeDiff;
-            }
-        } else {
-            window.cancelAnimationFrame(reqId);
-            wyswietltekst("Jesteś większy od sceny!", 650, ekranCenterX, ekranCenterY);
-            wyswietltekst("Poczekaj chiwle na odświeżenie...", 500, ekranCenterX, ekranCenterY + 670);
-            return "Tak"
-        }
-        if (kierunek === "odswiez") {
-            odswiez();
-        }
-
-        if (kierunek === "zatrzymaj") {
-            if (koniecGry = false) {
-                koniecGry = true;
-                wlaczMenu();
-            } else {
-                koniecgry = false;
-            }
+    if (!this.sprawdzCzyJestesWiekszyOdSceny()) {
+        if (kierunek === "gora") {
+            this.y -= predkoscRuchu * timeDiff;
+        } else if (kierunek === "dol") {
+            this.y += predkoscRuchu * timeDiff;
+        } else if (kierunek === "prawa") {
+            this.x += predkoscRuchu * timeDiff;
+        } else if (kierunek === "lewa") {
+            this.x -= predkoscRuchu * timeDiff;
         }
     } else {
-        sterowanieDotykowe();
+        window.cancelAnimationFrame(reqId);
+        wyswietltekst("Jesteś większy od sceny!", 650, ekranCenterX, ekranCenterY);
+        wyswietltekst("Poczekaj chiwle na odświeżenie...", 500, ekranCenterX, ekranCenterY + 670);
+        return "Tak"
+    }
+    if (kierunek === "odswiez") {
+        odswiez();
+    }
+
+    if (kierunek === "zatrzymaj") {
+        if (koniecGry = false) {
+            koniecGry = true;
+            wlaczMenu();
+        } else {
+            koniecgry = false;
+        }
     }
 };
 

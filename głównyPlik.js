@@ -133,23 +133,28 @@ $("body").keyup(function (zdarzenie) {
     kierunek = "";
 });
 
-$("body").bind("vmousedown", function(event) {
-    console.log("down");
+$("body").bind("vmousedown", function (event) {
     let x = event.clientX;
     let y = event.clientY;
-    if(y < ekranCenterY) {
-        kierunek = "gora";
-    } else if (y > ekranCenterY) {
-        kierunek = "dol";
-    // } else if() {
-    //     kierunek = "";
-    // } else() {
-    //     kierunek = "";
+    if (x < szerokoscEkranu / 3) {
+        kierunek = "lewa";
+    } else if (x > szerokoscEkranu * 2 / 3) {
+        kierunek = "prawa"
+    } else {
+        if (y < ekranCenterY) {
+            kierunek = "gora";
+        } else {
+            kierunek = "dol";
+        }
     }
 });
 
-$("body").bind("vmouseup", function(event) {
+$("body").bind("vmouseup", function (event) {
     kierunek = "";
+});
+
+$("body").bind("vmousemove", function (event) {
+//    kierunek = "";
 });
 
 function ensureVehicleInBounds() {
