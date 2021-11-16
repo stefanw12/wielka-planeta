@@ -2,18 +2,34 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.css">
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
     <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
         html {
             background-color: black;
             -webkit-user-select: none;
+            user-select: none;
         }
-        html, body {
+
+        html,
+        body {
             overflow-x: hidden;
         }
+
         body {
             position: relative;
         }
+        .ui-loading .ui-loader { display: block; }
+.ui-loader { display: none; position: absolute; opacity: .85; z-index: 100; left: 50%; width: 200px; margin-left: -130px; margin-top: -35px; padding: 10px 30px; }
     </style>
     <title>gra</title>
 </head>
@@ -22,7 +38,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
 
-    <canvas id="plotno" width="1250" height="845"></canvas>
+    <canvas id="plotno" width="1250" height="849"></canvas>
 
     <script src="asteroidy.js"></script>
     <script src="ksiezyce.js"></script>

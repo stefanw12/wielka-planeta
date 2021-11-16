@@ -67,6 +67,17 @@ let okrag = function (x, y, kolor, promien, wypelnijOkrag) {
     }
 };
 
+let kwadrat = function (kolor, x, y, wysokosc, szerokosc) {
+    ctx.fillStyle = kolor;
+    ctx.fillRect(x, y, szerokosc, wysokosc);
+}
+
+let strzałka = function (strona, x, y) {
+    if (strona === "prawo") {
+        ctx.fillStyle = "";
+    }
+}
+
 let wyswietltekst = function (tekst, rozmiar, x, y) {
     ctx.font = `${rozmiar}px Courier`;
     ctx.textAlign = "left";
@@ -121,9 +132,13 @@ for (let i = 0; i < 10; i++) {
     asteroidy.push(generujAsteroide());
 }
 
-let asteroidyKopia = asteroidy;
-
 let najWiekszyPlanetaRozmiar = null;
+
+let kwadratZStrzalka = function (strona) {
+    if (strona === "prawo") {
+        kwadrat("blue", szerokoscEkranu - 70, wysokoscEkranu - 50, 50, 50);
+    }
+}
 
 $("body").keydown(function (zdarzenie) {
     kierunek = kierunki[zdarzenie.keyCode];
@@ -234,6 +249,12 @@ let gra = function (lastTime) {
     }
 
     planeta.rysuj();
+
+    ctx.save();
+    ctx.fillStyle = "red";
+    ctx.moveTo(100, 100);
+    ctx.lineTo(140, 100);
+    ctx.restore();
 
     plotnoCtx.clearRect(0, 0, plotno.width, plotno.height);
     plotnoCtx.drawImage(bufferCanvas, worldX, worldY);
