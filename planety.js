@@ -76,10 +76,10 @@ Planeta.prototype.przesun = function (kierunek, timeDiff) {
     if (kierunek === "zatrzymaj") {
         if (koniecGry = false) {
             koniecGry = true;
-            wlaczMenu();
-        } else {
-            koniecgry = false;
-        }
+            //laczMenu();
+        }// else {
+        //    koniecgry = false;
+        //}
     }
 };
 
