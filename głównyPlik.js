@@ -68,15 +68,32 @@ let okrag = function (x, y, kolor, promien, wypelnijOkrag) {
 };
 
 let kwadrat = function (kolor, x, y, wysokosc, szerokosc) {
-    ctx.fillStyle = kolor;
-    ctx.fillRect(x, y, szerokosc, wysokosc);
+    plotnoCtx.fillStyle = kolor;
+    plotnoCtx.fillRect(x, y, szerokosc, wysokosc);
 }
 
-let strzałka = function (strona, x, y) {
+let strzalka = function (strona, x, y) {
     if (strona === "prawo") {
-        ctx.fillStyle = "";
+        plotnoCtx.save();
+        plotnoCtx.strokeStyle = "red";
+        plotnoCtx.beginPath()
+        plotnoCtx.moveTo(x, y);
+        let xTrojkata = x + 30
+        plotnoCtx.lineTo(x + 30, y);
+        plotnoCtx.stroke();
+        plotnoCtx.fillStyle = "red";
+        plotnoCtx.beginPath();
+        plotnoCtx.moveTo(xTrojkata, y)
+        plotnoCtx.lineTo(xTrojkata, y + 10);
+        plotnoCtx.lineTo(xTrojkata + 15, y);
+        plotnoCtx.lineTo(xTrojkata, y - 10);
+        plotnoCtx.lineTo(xTrojkata, y);
+        plotnoCtx.fill();
+        plotnoCtx.restore();
+    } else if (strona === "lewo") {
+
     }
-}
+};
 
 let wyswietltekst = function (tekst, rozmiar, x, y) {
     ctx.font = `${rozmiar}px Courier`;
@@ -132,11 +149,10 @@ for (let i = 0; i < 10; i++) {
     asteroidy.push(generujAsteroide());
 }
 
-let najWiekszyPlanetaRozmiar = null;
-
-let kwadratZStrzalka = function (strona) {
+let kwadratZeStrzalka = function (strona) {
     if (strona === "prawo") {
-        kwadrat("blue", szerokoscEkranu - 70, wysokoscEkranu - 50, 50, 50);
+        kwadrat("orange", szerokoscEkranu - 70, wysokoscEkranu - 50, 50, 50);
+        strzalka("prawo", szerokoscEkranu - 67, wysokoscEkranu - 27)
     }
 }
 
@@ -144,7 +160,7 @@ $("body").keydown(function (zdarzenie) {
     kierunek = kierunki[zdarzenie.keyCode];
 });
 
-$("body").keyup(function (zdarzenie) {
+$("body").keyup(function () {
     kierunek = "";
 });
 
@@ -154,7 +170,7 @@ $("body").bind("vmousedown", function (event) {
     ustawKierunek(x, y);
 });
 
-$("body").bind("vmouseup", function (event) {
+$("body").bind("vmouseup", function () {
     kierunek = "";
 });
 
@@ -249,13 +265,6 @@ let gra = function (lastTime) {
     }
 
     planeta.rysuj();
-
-    ctx.save();
-    ctx.fillStyle = "red";
-    ctx.moveTo(100, 100);
-    ctx.lineTo(140, 100);
-    ctx.restore();
-
     plotnoCtx.clearRect(0, 0, plotno.width, plotno.height);
     plotnoCtx.drawImage(bufferCanvas, worldX, worldY);
     if (!koniecGry) {
@@ -263,6 +272,7 @@ let gra = function (lastTime) {
             gra(time);
         });
 
+    kwadratZeStrzalka("prawo");
     }
 };
 
