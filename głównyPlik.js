@@ -73,15 +73,15 @@ let kwadrat = function (kolor, x, y, wysokosc, szerokosc) {
 }
 
 let strzalka = function (strona, x, y) {
+    plotnoCtx.save();
+    plotnoCtx.fillStyle = "red";
+    plotnoCtx.strokeStyle = "red";
     if (strona === "prawo") {
-        plotnoCtx.save();
-        plotnoCtx.strokeStyle = "red";
         plotnoCtx.beginPath()
         plotnoCtx.moveTo(x, y);
         let xTrojkata = x + 30
         plotnoCtx.lineTo(x + 30, y);
         plotnoCtx.stroke();
-        plotnoCtx.fillStyle = "red";
         plotnoCtx.beginPath();
         plotnoCtx.moveTo(xTrojkata, y)
         plotnoCtx.lineTo(xTrojkata, y + 10);
@@ -101,6 +101,15 @@ let strzalka = function (strona, x, y) {
         plotnoCtx.lineTo(xTrojkata - 15, y);
         plotnoCtx.lineTo(xTrojkata, y + 10);
         plotnoCtx.lineTo(xTrojkata, y);
+        plotnoCtx.fill();
+    } else if (strona === "dol") {
+        plotnoCtx.beginPath();
+        plotnoCtx.moveTo(x, y);
+        let yTrojkata = y + 30
+        plotnoCtx.lineTo(x, y + 30);
+        plotnoCtx.stroke();
+        plotnoCtx.beginPath();
+        plotnoCtx.moveTo(x, yTrojkata);
         plotnoCtx.fill();
     }
     plotnoCtx.restore();
@@ -165,8 +174,8 @@ let kwadratZeStrzalka = function (strona) {
         kwadrat("orange", szerokoscEkranu - 70, wysokoscEkranu - 50, 50, 50);
         strzalka("prawo", szerokoscEkranu - 67, wysokoscEkranu - 27);
     } else if (strona === "lewo") {
-        //kwadrat("orange", szerokoscEkranu - 200, wysokoscEkranu - 50, 50, 50);
-        //strzalka("lewo", szerokoscEkranu - 7, wysokoscEkranu - 27);
+        kwadrat("orange", szerokoscEkranu - 200, wysokoscEkranu - 50, 50, 50);
+        strzalka("lewo", szerokoscEkranu - 153, wysokoscEkranu - 27);
     }
 }
 
@@ -245,7 +254,7 @@ function updateWorldCoords() {
 
 let planeta = new Planeta(ekranCenterX - 500, ekranCenterY, 50);
 
-let gra= function (lastTime) {
+let gra = function (lastTime) {
     let time = Date.now();
     let timeDiff = time - lastTime;
 
