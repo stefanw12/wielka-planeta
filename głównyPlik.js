@@ -31,12 +31,12 @@ bufferCanvas.height = bufferHeight;
 let ctx = bufferCanvas.getContext("2d");
 let reqId;
 
-let usun = function (obiekt, lista) {
+let usun = function(obiekt, lista) {
     let obiektDoUsuniecia = lista.indexOf(obiekt);
     lista.splice(obiektDoUsuniecia, 1);
 }
 
-let gwiazdka = function (x, y, scale) {
+let gwiazdka = function(x, y, scale) {
     ctx.save();
     ctx.fillStyle = "white";
     ctx.translate(x, y);
@@ -56,7 +56,7 @@ let gwiazdka = function (x, y, scale) {
     ctx.restore();
 }
 
-let okrag = function (x, y, kolor, promien, wypelnijOkrag) {
+let okrag = function(x, y, kolor, promien, wypelnijOkrag) {
     ctx.beginPath();
     ctx.arc(x, y, promien, 0, Math.PI * 2, false);
     if (wypelnijOkrag) {
@@ -67,12 +67,12 @@ let okrag = function (x, y, kolor, promien, wypelnijOkrag) {
     }
 };
 
-let kwadrat = function (kolor, x, y, wysokosc, szerokosc) {
+let kwadrat = function(kolor, x, y, wysokosc, szerokosc) {
     plotnoCtx.fillStyle = kolor;
     plotnoCtx.fillRect(x, y, szerokosc, wysokosc);
 }
 
-let strzalka = function (strona, x, y) {
+let strzalka = function(strona, x, y) {
     plotnoCtx.save();
     plotnoCtx.fillStyle = "red";
     plotnoCtx.strokeStyle = "red";
@@ -115,7 +115,7 @@ let strzalka = function (strona, x, y) {
     plotnoCtx.restore();
 };
 
-let wyswietltekst = function (tekst, rozmiar, x, y) {
+let wyswietltekst = function(tekst, rozmiar, x, y) {
     ctx.font = `${rozmiar}px Courier`;
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
@@ -134,7 +134,7 @@ function wlaczMenu() {
 let gwiazda = new Gwiazda();
 let gwiazdy = [gwiazda];
 
-let generujPlanete = function () {
+let generujPlanete = function() {
     let newX = 0;
     let newY = 0;
     let kolizjaGwiazdy = false;
@@ -169,7 +169,7 @@ for (let i = 0; i < 10; i++) {
     asteroidy.push(generujAsteroide());
 }
 
-let kwadratZeStrzalka = function (strona) {
+let kwadratZeStrzalka = function(strona) {
     if (strona === "prawo") {
         kwadrat("orange", szerokoscEkranu - 70, wysokoscEkranu - 50, 50, 50);
         strzalka("prawo", szerokoscEkranu - 67, wysokoscEkranu - 27);
@@ -179,32 +179,32 @@ let kwadratZeStrzalka = function (strona) {
     }
 }
 
-$("body").keydown(function (zdarzenie) {
+$("body").keydown(function(zdarzenie) {
     kierunek = kierunki[zdarzenie.keyCode];
 });
 
-$("body").keyup(function () {
+$("body").keyup(function() {
     kierunek = "";
 });
 
-$("body").bind("vmousedown", function (event) {
+$("body").bind("vmousedown", function(event) {
     let x = event.clientX;
     let y = event.clientY;
     ustawKierunek(x, y);
 });
 
-$("body").bind("vmouseup", function () {
+$("body").bind("vmouseup", function() {
     kierunek = "";
 });
 
-$("body").bind("vmousemove", function (event) {
+$("body").bind("vmousemove", function(event) {
     let x = event.clientX;
     let y = event.clientY;
-    if(kierunek !== "") {
+    if (kierunek !== "") {
         ustawKierunek(x, y);
     }
-//    console.log(x + " " + y);
-//    kierunek = "";
+    //    console.log(x + " " + y);
+    //    kierunek = "";
 });
 
 function ustawKierunek(x, y) {
@@ -254,7 +254,7 @@ function updateWorldCoords() {
 
 let planeta = new Planeta(ekranCenterX - 500, ekranCenterY, 50);
 
-let gra = function (lastTime) {
+let gra = function(lastTime) {
     let time = Date.now();
     let timeDiff = time - lastTime;
 
@@ -291,18 +291,18 @@ let gra = function (lastTime) {
     plotnoCtx.clearRect(0, 0, plotno.width, plotno.height);
     plotnoCtx.drawImage(bufferCanvas, worldX, worldY);
     if (!koniecGry) {
-        reqId = window.requestAnimationFrame(function () {
+        reqId = window.requestAnimationFrame(function() {
             gra(time);
         });
 
-    kwadratZeStrzalka("prawo");
-    kwadratZeStrzalka("lewo");
+        kwadratZeStrzalka("prawo");
+        kwadratZeStrzalka("lewo");
     }
 };
 
 gra(startTime);
 
-setInterval(function () {
+setInterval(function() {
     asteroidy.forEach(element => {
         element.przesun();
     });
