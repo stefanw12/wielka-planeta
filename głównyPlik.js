@@ -72,46 +72,24 @@ let kwadrat = function(kolor, x, y, wysokosc, szerokosc) {
     plotnoCtx.fillRect(x, y, szerokosc, wysokosc);
 }
 
-let strzalka = function(strona, x, y) {
+let strzalka = function(x, y, obrot) {
     plotnoCtx.save();
+    plotnoCtx.translate(x + 25, y + 5);
+    plotnoCtx.rotate(obrot * Math.PI / 180);
     plotnoCtx.fillStyle = "red";
     plotnoCtx.strokeStyle = "red";
-    if (strona === "prawo") {
-        plotnoCtx.beginPath()
-        plotnoCtx.moveTo(x, y);
-        let xTrojkata = x + 30
-        plotnoCtx.lineTo(x + 30, y);
-        plotnoCtx.stroke();
-        plotnoCtx.beginPath();
-        plotnoCtx.moveTo(xTrojkata, y)
-        plotnoCtx.lineTo(xTrojkata, y + 10);
-        plotnoCtx.lineTo(xTrojkata + 15, y);
-        plotnoCtx.lineTo(xTrojkata, y - 10);
-        plotnoCtx.lineTo(xTrojkata, y);
-        plotnoCtx.fill();
-    } else if (strona === "lewo") {
-        plotnoCtx.beginPath();
-        plotnoCtx.moveTo(x, y);
-        plotnoCtx.lineTo(x - 30, y)
-        xTrojkata = x - 30;
-        plotnoCtx.stroke();
-        plotnoCtx.beginPath();
-        plotnoCtx.moveTo(xTrojkata, y);
-        plotnoCtx.lineTo(xTrojkata, y - 10);
-        plotnoCtx.lineTo(xTrojkata - 15, y);
-        plotnoCtx.lineTo(xTrojkata, y + 10);
-        plotnoCtx.lineTo(xTrojkata, y);
-        plotnoCtx.fill();
-    } else if (strona === "dol") {
-        plotnoCtx.beginPath();
-        plotnoCtx.moveTo(x, y);
-        let yTrojkata = y + 30
-        plotnoCtx.lineTo(x, y + 30);
-        plotnoCtx.stroke();
-        plotnoCtx.beginPath();
-        plotnoCtx.moveTo(x, yTrojkata);
-        plotnoCtx.fill();
-    }
+    plotnoCtx.beginPath()
+    let xTrojkata = 5;
+    plotnoCtx.moveTo(-25, 0);
+    plotnoCtx.lineTo(xTrojkata, 0);
+    plotnoCtx.stroke();
+    plotnoCtx.beginPath();
+    plotnoCtx.moveTo(xTrojkata, 0)
+    plotnoCtx.lineTo(xTrojkata, 10);
+    plotnoCtx.lineTo(xTrojkata + 15, 0);
+    plotnoCtx.lineTo(xTrojkata, -10);
+    plotnoCtx.lineTo(xTrojkata, 0);
+    plotnoCtx.fill();
     plotnoCtx.restore();
 };
 
@@ -172,10 +150,16 @@ for (let i = 0; i < 10; i++) {
 let kwadratZeStrzalka = function(strona) {
     if (strona === "prawo") {
         kwadrat("orange", szerokoscEkranu - 70, wysokoscEkranu - 50, 50, 50);
-        strzalka("prawo", szerokoscEkranu - 67, wysokoscEkranu - 27);
+        strzalka(szerokoscEkranu - 67, wysokoscEkranu - 27, 0);
     } else if (strona === "lewo") {
-        kwadrat("orange", szerokoscEkranu - 200, wysokoscEkranu - 50, 50, 50);
-        strzalka("lewo", szerokoscEkranu - 153, wysokoscEkranu - 27);
+        kwadrat("orange", szerokoscEkranu - 190, wysokoscEkranu - 50, 50, 50);
+        strzalka(szerokoscEkranu - 193, wysokoscEkranu - 27, 180);
+    } else if (strona === "dol") {
+        kwadrat("orange", szerokoscEkranu - 130, wysokoscEkranu - 50, 50, 50);
+        strzalka(szerokoscEkranu - 130, wysokoscEkranu - 27, 90);
+    } else if (strona === "gora") {
+        kwadrat("orange", szerokoscEkranu - 130, wysokoscEkranu - 107, 50, 50);
+        strzalka(szerokoscEkranu - 130, wysokoscEkranu - 88, -90);
     }
 }
 
@@ -187,38 +171,11 @@ $("body").keyup(function() {
     kierunek = "";
 });
 
-$("body").bind("vmousedown", function(event) {
-    let x = event.clientX;
-    let y = event.clientY;
-    ustawKierunek(x, y);
-});
-
-$("body").bind("vmouseup", function() {
-    kierunek = "";
-});
-
-$("body").bind("vmousemove", function(event) {
-    let x = event.clientX;
-    let y = event.clientY;
-    if (kierunek !== "") {
-        ustawKierunek(x, y);
-    }
-    //    console.log(x + " " + y);
-    //    kierunek = "";
-});
-
-function ustawKierunek(x, y) {
-    if (x < szerokoscEkranu / 3) {
-        kierunek = "lewa";
-    } else if (x > szerokoscEkranu * 2 / 3) {
-        kierunek = "prawa";
-    } else {
-        if (y < ekranCenterY) {
-            kierunek = "gora";
-        } else {
-            kierunek = "dol";
-        }
-    }
+let narysujStrzalki = function() {
+    kwadratZeStrzalka("prawo");
+    kwadratZeStrzalka("lewo");
+    kwadratZeStrzalka("dol");
+    kwadratZeStrzalka("gora");
 }
 
 function ensureVehicleInBounds() {
@@ -295,8 +252,7 @@ let gra = function(lastTime) {
             gra(time);
         });
 
-        kwadratZeStrzalka("prawo");
-        kwadratZeStrzalka("lewo");
+        narysujStrzalki();
     }
 };
 
