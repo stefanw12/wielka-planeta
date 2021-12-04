@@ -70,3 +70,6 @@
 //     plotnoCtx.moveTo(x, yTrojkata);
 //     plotnoCtx.fill();
 // }
+//
+// let szer = plotno.width;
+// let wys = plotno.height;

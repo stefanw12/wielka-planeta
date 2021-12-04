@@ -1,7 +1,5 @@
 let startTime = Date.now();
 let plotno = document.getElementById("plotno");
-let szer = plotno.width;
-let wys = plotno.height;
 let plotnoCtx = plotno.getContext("2d");
 let kierunki = {
     37: "lewa",
