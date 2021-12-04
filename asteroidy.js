@@ -1,19 +1,19 @@
-let Asteroida = function (x, y, rozmiar, predkosc) {
+let Asteroida = function(x, y, rozmiar, predkosc) {
     this.x = x;
     this.y = y;
     this.rozmiar = rozmiar;
 };
 
-Asteroida.prototype.rysuj = function () {
+Asteroida.prototype.rysuj = function() {
     ctx.save();
     okrag(this.x, this.y, "gray", this.rozmiar, true);
     ctx.restore();
 };
 
-Asteroida.prototype.przesun = function () {
+Asteroida.prototype.przesun = function() {
     this.y += 10;
     if (this.y > bufferHeight) {
-        usun(this, asteroidy);
+        this.y = 0;
     }
 };
 
@@ -21,7 +21,7 @@ function pointInCircle(x1, y1, x2, y2, rozmiar, rozmiar2) {
     return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)) < rozmiar + rozmiar2;
 }
 
-let generujAsteroide = function () {
+let generujAsteroide = function() {
     let newX = 0;
     let newY = 0;
     let kolizjaKsiezyce = false;
