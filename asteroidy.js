@@ -1,4 +1,4 @@
-let Asteroida = function(x, y, rozmiar, predkosc) {
+let Asteroida = function(x, y, rozmiar) {
     this.x = x;
     this.y = y;
     this.rozmiar = rozmiar;
