@@ -12,7 +12,7 @@ Asteroida.prototype.rysuj = function() {
 
 Asteroida.prototype.przesun = function() {
     this.y += 10;
-    if (this.y > bufferHeight) {
+    if (this.y > bufferHeight + this.rozmiar) {
         this.y = 0;
     }
 };
