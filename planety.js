@@ -1,10 +1,10 @@
-let Planeta = function (x, y, rozmiar) {
+let Planeta = function(x, y, rozmiar) {
     this.x = x;
     this.y = y;
     this.planetaRozmiar = rozmiar;
 };
 
-Planeta.prototype.rysuj = function () {
+Planeta.prototype.rysuj = function() {
     ctx.save();
     let szerokoscPaska = 20;
     let iloscPaskow = Math.ceil(this.planetaRozmiar / szerokoscPaska);
@@ -16,38 +16,38 @@ Planeta.prototype.rysuj = function () {
     ctx.restore();
 };
 
-Planeta.prototype.sprawdzCzyJestesWiekszyOdSceny = function () {
+Planeta.prototype.sprawdzCzyJestesWiekszyOdSceny = function() {
     return gwiazdy.length === 0
 };
 
-Planeta.prototype.przesun = function (kierunek, timeDiff) {
+Planeta.prototype.przesun = function(kierunek, timeDiff) {
     asteroidy.forEach(element => {
-        if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar)
-            && this.planetaRozmiar > element.rozmiar) {
+        if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar) &&
+            this.planetaRozmiar > element.rozmiar) {
             this.planetaRozmiar += element.rozmiar / 3;
             usun(element, asteroidy);
         }
     });
 
     ksiezyce.forEach(element => {
-        if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar)
-            && this.planetaRozmiar > element.rozmiar) {
+        if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar) &&
+            this.planetaRozmiar > element.rozmiar) {
             this.planetaRozmiar += element.rozmiar / 5;
             usun(element, ksiezyce);
         }
     });
 
     planety.forEach(element => {
-        if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.planetaRozmiar)
-            && this.planetaRozmiar > element.planetaRozmiar) {
+        if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.planetaRozmiar) &&
+            this.planetaRozmiar > element.planetaRozmiar) {
             this.planetaRozmiar += element.planetaRozmiar / 6;
             usun(element, planety);
         }
     });
 
     gwiazdy.forEach(element => {
-        if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar)
-        && asteroidy.length === 0 & ksiezyce.length === 0 & planety.length === 0) {
+        if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar) &&
+            asteroidy.length === 0 & ksiezyce.length === 0 & planety.length === 0) {
             this.planetaRozmiar += 200;
             usun(element, gwiazdy);
         }
@@ -77,12 +77,38 @@ Planeta.prototype.przesun = function (kierunek, timeDiff) {
         if (koniecGry = false) {
             koniecGry = true;
             //laczMenu();
-        }// else {
+        } // else {
         //    koniecgry = false;
         //}
     }
 };
 
-Planeta.prototype.sprawdzKolizje = function (x, y, promien, drugiObjektX, drugiObjektY, drugiObjektPromien) {
+let mouseX = 0;
+let mouseY = 0;
+
+$("body").bind("vmousemove", function(event) {
+    mouseY = event.clientY;
+    mouseX = event.clientX;
+    //return mouseX, mouseY
+});
+
+let porownaj = function(strzalkaX, strzalkaY, strzalkaRozmiar) {
+    return (strzalkaX <= mouseX && strzalkaX + strzalkaRozmiar >= mouseX) &&
+        (strzalkaY <= mouseY && strzalkaY + strzalkaRozmiar >= mouseY);
+}
+
+Planeta.prototype.przesuwaniePalcem = function(timeDiff) {
+    if (porownaj(prawaStrzalkaX, prawaStrzalkaY, rozmiarKwadratu) === true) {
+        this.x += predkoscRuchu * timeDiff;
+    } else if (porownaj(lewaStrzalkaX, lewaStrzalkaY, rozmiarKwadratu) === true) {
+        this.x -= predkoscRuchu * timeDiff;
+    } else if (porownaj(dolnaStrzalkaX, dolnaStrzalkaY, rozmiarKwadratu) === true) {
+        this.y += predkoscRuchu * timeDiff;
+    } else if (porownaj(gornaStrzalkaX, gornaStrzalkaY, rozmiarKwadratu) === true) {
+        this.y -= predkoscRuchu * timeDiff;
+    }
+};
+
+Planeta.prototype.sprawdzKolizje = function(x, y, promien, drugiObjektX, drugiObjektY, drugiObjektPromien) {
     return Math.sqrt(Math.pow(x - drugiObjektX, 2) + Math.pow(y - drugiObjektY, 2)) < promien + drugiObjektPromien;
 };

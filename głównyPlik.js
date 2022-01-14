@@ -145,18 +145,29 @@ for (let i = 0; i < 10; i++) {
     asteroidy.push(generujAsteroide());
 }
 
+//to nie współrzędne strzałki tylko kwadrata, aby łatwiej liczyć kolizje!
+let rozmiarKwadratu = 50
+let prawaStrzalkaX = szerokoscEkranu - 70
+let prawaStrzalkaY = wysokoscEkranu - 50
+let lewaStrzalkaX = szerokoscEkranu - 190
+let lewaStrzalkaY = wysokoscEkranu - 50
+let dolnaStrzalkaX = szerokoscEkranu - 130
+let dolnaStrzalkaY = wysokoscEkranu - 50
+let gornaStrzalkaX = szerokoscEkranu - 130
+let gornaStrzalkaY = wysokoscEkranu - 107
+
 let kwadratZeStrzalka = function(strona) {
     if (strona === "prawo") {
-        kwadrat("orange", szerokoscEkranu - 70, wysokoscEkranu - 50, 50, 50);
+        kwadrat("orange", prawaStrzalkaX, prawaStrzalkaY, rozmiarKwadratu, rozmiarKwadratu);
         strzalka(szerokoscEkranu - 67, wysokoscEkranu - 27, 0);
     } else if (strona === "lewo") {
-        kwadrat("orange", szerokoscEkranu - 190, wysokoscEkranu - 50, 50, 50);
+        kwadrat("orange", lewaStrzalkaX, lewaStrzalkaY, rozmiarKwadratu, rozmiarKwadratu);
         strzalka(szerokoscEkranu - 193, wysokoscEkranu - 27, 180);
     } else if (strona === "dol") {
-        kwadrat("orange", szerokoscEkranu - 130, wysokoscEkranu - 50, 50, 50);
+        kwadrat("orange", dolnaStrzalkaX, dolnaStrzalkaY, rozmiarKwadratu, rozmiarKwadratu);
         strzalka(szerokoscEkranu - 130, wysokoscEkranu - 27, 90);
     } else if (strona === "gora") {
-        kwadrat("orange", szerokoscEkranu - 130, wysokoscEkranu - 107, 50, 50);
+        kwadrat("orange", gornaStrzalkaX, gornaStrzalkaY, rozmiarKwadratu, rozmiarKwadratu);
         strzalka(szerokoscEkranu - 130, wysokoscEkranu - 88, -90);
     }
 }
@@ -175,6 +186,12 @@ let narysujStrzalki = function() {
     kwadratZeStrzalka("dol");
     kwadratZeStrzalka("gora");
 }
+
+$("body").bind("vmousemove", function(event) {
+    let mouseY = event.clientX;
+    let mouseX = event.clientY;
+    return mouseX, mouseY
+});
 
 function ensureVehicleInBounds() {
     if (planeta.x < planeta.planetaRozmiar) {
@@ -251,6 +268,7 @@ let gra = function(lastTime) {
         });
 
         narysujStrzalki();
+        planeta.przesuwaniePalcem(timeDiff);
     }
 };
 
