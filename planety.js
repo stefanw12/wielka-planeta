@@ -89,7 +89,6 @@ let mouseY = 0;
 $("body").bind("vmousemove", function(event) {
     mouseY = event.clientY;
     mouseX = event.clientX;
-    //return mouseX, mouseY
 });
 
 let porownaj = function(strzalkaX, strzalkaY, strzalkaRozmiar) {

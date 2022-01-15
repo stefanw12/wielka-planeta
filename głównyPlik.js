@@ -147,28 +147,28 @@ for (let i = 0; i < 10; i++) {
 
 //to nie współrzędne strzałki tylko kwadrata, aby łatwiej liczyć kolizje!
 let rozmiarKwadratu = 50
-let prawaStrzalkaX = szerokoscEkranu - 70
+let prawaStrzalkaX = szerokoscEkranu - 1106
 let prawaStrzalkaY = wysokoscEkranu - 50
-let lewaStrzalkaX = szerokoscEkranu - 190
+let lewaStrzalkaX = szerokoscEkranu - 1216
 let lewaStrzalkaY = wysokoscEkranu - 50
-let dolnaStrzalkaX = szerokoscEkranu - 130
+let dolnaStrzalkaX = szerokoscEkranu - 1161
 let dolnaStrzalkaY = wysokoscEkranu - 50
-let gornaStrzalkaX = szerokoscEkranu - 130
-let gornaStrzalkaY = wysokoscEkranu - 107
+let gornaStrzalkaX = szerokoscEkranu - 1161
+let gornaStrzalkaY = wysokoscEkranu - 106
 
 let kwadratZeStrzalka = function(strona) {
     if (strona === "prawo") {
         kwadrat("orange", prawaStrzalkaX, prawaStrzalkaY, rozmiarKwadratu, rozmiarKwadratu);
-        strzalka(szerokoscEkranu - 67, wysokoscEkranu - 27, 0);
+        strzalka(szerokoscEkranu - 1105, wysokoscEkranu - 27, 0);
     } else if (strona === "lewo") {
         kwadrat("orange", lewaStrzalkaX, lewaStrzalkaY, rozmiarKwadratu, rozmiarKwadratu);
-        strzalka(szerokoscEkranu - 193, wysokoscEkranu - 27, 180);
+        strzalka(szerokoscEkranu - 1219, wysokoscEkranu - 27, 180);
     } else if (strona === "dol") {
         kwadrat("orange", dolnaStrzalkaX, dolnaStrzalkaY, rozmiarKwadratu, rozmiarKwadratu);
-        strzalka(szerokoscEkranu - 130, wysokoscEkranu - 27, 90);
+        strzalka(szerokoscEkranu - 1161, wysokoscEkranu - 27, 90);
     } else if (strona === "gora") {
         kwadrat("orange", gornaStrzalkaX, gornaStrzalkaY, rozmiarKwadratu, rozmiarKwadratu);
-        strzalka(szerokoscEkranu - 130, wysokoscEkranu - 88, -90);
+        strzalka(szerokoscEkranu - 1161, wysokoscEkranu - 88, -90);
     }
 }
 
@@ -188,9 +188,9 @@ let narysujStrzalki = function() {
 }
 
 $("body").bind("vmousemove", function(event) {
-    let mouseY = event.clientX;
-    let mouseX = event.clientY;
-    return mouseX, mouseY
+    let mouseYTest = event.clientY;
+    let mouseXTest = event.clientX;
+    console.log(`${mouseXTest} ${mouseYTest}`)
 });
 
 function ensureVehicleInBounds() {
