@@ -92,11 +92,13 @@ let strzalka = function(x, y, obrot) {
 };
 
 let wyswietltekst = function(tekst, rozmiar, x, y) {
-    ctx.font = `${rozmiar}px Courier`;
-    ctx.textAlign = "left";
-    ctx.textBaseline = "top";
-    ctx.fillStyle = "White";
-    ctx.fillText(tekst, x, y);
+    plotnoCtx.save();
+    plotnoCtx.font = `${rozmiar}px Courier`;
+    plotnoCtx.fillStyle = "White";
+    plotnoCtx.textAlign = "left";
+    plotnoCtx.textBaseline = "top";
+    plotnoCtx.fillText(tekst, x, y);
+    plotnoCtx.restore();
 };
 
 function odswiez() {
@@ -187,9 +189,12 @@ let narysujStrzalki = function() {
     kwadratZeStrzalka("gora");
 }
 
+let mouseXTest;
+let mouseYTest;
+
 $("body").bind("vmousemove", function(event) {
-    let mouseYTest = event.clientY;
-    let mouseXTest = event.clientX;
+    mouseYTest = event.clientY;
+    mouseXTest = event.clientX;
     console.log(`${mouseXTest} ${mouseYTest}`)
 });
 
@@ -262,6 +267,8 @@ let gra = function(lastTime) {
     planeta.rysuj();
     plotnoCtx.clearRect(0, 0, plotno.width, plotno.height);
     plotnoCtx.drawImage(bufferCanvas, worldX, worldY);
+    wyswietltekst(`${mouseXTest} ${mouseYTest}`, 50, ekranCenterX, ekranCenterY);
+    wyswietltekst(`${prawaStrzalkaX} ${prawaStrzalkaY}`, 50, ekranCenterX, ekranCenterY + 50);
     if (!koniecGry) {
         reqId = window.requestAnimationFrame(function() {
             gra(time);
