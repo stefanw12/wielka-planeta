@@ -86,9 +86,19 @@ Planeta.prototype.przesun = function(kierunek, timeDiff) {
 let mouseX = 0;
 let mouseY = 0;
 
-$("body").bind("vmousemove", function(event) {
-    mouseY = event.clientY;
+//$("body").bind("vmousemove", function(event) {
+//    mouseY = event.clientY;
+//    mouseX = event.clientX;
+//});
+
+$("body").bind("vmousedown", function(event) {
     mouseX = event.clientX;
+    mouseY = event.clientY;
+});
+
+$("body").bind("vmouseup", function() {
+    mouseX = 0;
+    mouseY = 0;
 });
 
 let porownaj = function(strzalkaX, strzalkaY, strzalkaRozmiar) {
