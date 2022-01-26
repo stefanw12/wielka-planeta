@@ -2,6 +2,7 @@ let Asteroida = function(x, y, rozmiar) {
     this.x = x;
     this.y = y;
     this.rozmiar = rozmiar;
+    this.kierunekLotu = Math.floor(Math.random() * 360);
 };
 
 Asteroida.prototype.rysuj = function() {
@@ -11,9 +12,10 @@ Asteroida.prototype.rysuj = function() {
 };
 
 Asteroida.prototype.przesun = function() {
-    this.y += 10;
-    if (this.y > bufferHeight + this.rozmiar) {
-        this.y = 0;
+    this.x += 10 * Math.cos(this.kierunekLotu * Math.PI / 180);
+    this.y += 10 * Math.sin(this.kierunekLotu * Math.PI / 180);
+    if (this.y > bufferHeight + this.rozmiar || this.y < 0 || this.x > bufferWidth + this.rozmiar || this.x < 0) {
+        this.kierunekLotu += 90;
     }
 };
 

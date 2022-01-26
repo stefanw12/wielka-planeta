@@ -21,7 +21,7 @@ let centerX = bufferWidth / 2;
 let centerY = bufferHeight / 2;
 let worldX = 0;
 let worldY = 0;
-let koniecGry = false;
+let planetyZKsiezycami = [];
 
 let bufferCanvas = document.createElement("canvas");
 bufferCanvas.width = bufferWidth;
@@ -92,11 +92,11 @@ let strzalka = function(x, y, obrot) {
 };
 
 let wyswietltekst = function(tekst, rozmiar, x, y) {
-    ctx.font = `${rozmiar}px Courier`;
-    ctx.textAlign = "left";
-    ctx.textBaseline = "top";
-    ctx.fillStyle = "White";
-    ctx.fillText(tekst, x, y);
+    plotnoCtx.font = `${rozmiar}px Courier`;
+    plotnoCtx.textAlign = "left";
+    plotnoCtx.textBaseline = "top";
+    plotnoCtx.fillStyle = "White";
+    plotnoCtx.fillText(tekst, x, y);
 };
 
 function odswiez() {
@@ -125,6 +125,7 @@ let generujPlanete = function() {
         kolizjaPlanety = planety.some(planeta => {
             return pointInCircle(newX, newY, planeta.x, planeta.y, planeta.rozmiar, rozmiar);
         });
+
     } while (kolizjaGwiazdy || kolizjaPlanety);
     let planeta = new Planeta(newX, newY, rozmiar, Math.floor(50 + Math.random() * 50));
     return planeta;
@@ -135,19 +136,18 @@ for (let i = 0; i < 10; i++) {
     planety.push(generujPlanete());
 }
 
-let ksiezyce = [];
-for (let i = 0; i < 10; i++) {
-    ksiezyce.push(generujKsieżyc());
-}
+// let ksiezyce = [];
+// for (let i = 0; i < 10; i++) {
+//     ksiezyce.push(generujKsiezyc());
+// }
 
 let asteroidy = [];
 for (let i = 0; i < 10; i++) {
     asteroidy.push(generujAsteroide());
 }
 
-//to nie współrzędne strzałki tylko kwadrata, aby łatwiej liczyć kolizje!
 let rozmiarKwadratu = 50
-let prawaStrzalkaX = szerokoscEkranu - 1106
+let prawaStrzalkaX = szerokoscEkranu - 1106 //to nie współrzędne strzałki tylko kwadrata, aby łatwiej liczyć kolizje!
 let prawaStrzalkaY = wysokoscEkranu - 50
 let lewaStrzalkaX = szerokoscEkranu - 1216
 let lewaStrzalkaY = wysokoscEkranu - 50
@@ -251,9 +251,9 @@ let gra = function(lastTime) {
         planety[i].rysuj();
     }
 
-    for (let i = 0; i < ksiezyce.length; i++) {
-        ksiezyce[i].rysuj();
-    }
+    // for (let i = 0; i < ksiezyce.length; i++) {
+    //     ksiezyce[i].rysuj();
+    // }
 
     for (let i = 0; i < asteroidy.length; i++) {
         asteroidy[i].rysuj();
@@ -262,7 +262,14 @@ let gra = function(lastTime) {
     planeta.rysuj();
     plotnoCtx.clearRect(0, 0, plotno.width, plotno.height);
     plotnoCtx.drawImage(bufferCanvas, worldX, worldY);
-    if (!koniecGry) {
+    if (planeta.sprawdzCzyJestesWiekszyOdSceny() === true) {
+        koniecGry = false
+        wyswietltekst("Jesteś większy od sceny!", 60, ekranCenterX - 350, ekranCenterY);
+        setTimeout(function() {
+            window.location.reload(true);
+        }, 2000);
+    }
+    if (koniecGry === false) {
         reqId = window.requestAnimationFrame(function() {
             gra(time);
         });
@@ -278,4 +285,4 @@ setInterval(function() {
     asteroidy.forEach(element => {
         element.przesun();
     });
-}, 700);
+}, 70);

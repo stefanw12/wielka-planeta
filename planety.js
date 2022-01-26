@@ -1,7 +1,11 @@
+let koniecGry = false;
+let ksiezyce = [];
 let Planeta = function(x, y, rozmiar) {
     this.x = x;
     this.y = y;
     this.planetaRozmiar = rozmiar;
+    this.ksiezyc = generujKsiezyc();
+    ksiezyce.push(this.ksiezyc);
 };
 
 Planeta.prototype.rysuj = function() {
@@ -14,6 +18,7 @@ Planeta.prototype.rysuj = function() {
         okrag(this.x, this.y, kolor, rozmiar, true);
     }
     ctx.restore();
+    this.ksiezyc.rysuj();
 };
 
 Planeta.prototype.sprawdzCzyJestesWiekszyOdSceny = function() {
@@ -47,7 +52,7 @@ Planeta.prototype.przesun = function(kierunek, timeDiff) {
 
     gwiazdy.forEach(element => {
         if (this.sprawdzKolizje(this.x, this.y, this.planetaRozmiar, element.x, element.y, element.rozmiar) &&
-            asteroidy.length === 0 & ksiezyce.length === 0 & planety.length === 0) {
+            asteroidy.length === 0 && ksiezyce.length === 0 && planety.length === 0) {
             this.planetaRozmiar += 200;
             usun(element, gwiazdy);
         }
@@ -64,23 +69,19 @@ Planeta.prototype.przesun = function(kierunek, timeDiff) {
             this.x -= predkoscRuchu * timeDiff;
         }
     } else {
-        window.cancelAnimationFrame(reqId);
-        wyswietltekst("Jesteś większy od sceny!", 650, ekranCenterX, ekranCenterY);
-        wyswietltekst("Poczekaj chiwle na odświeżenie...", 500, ekranCenterX, ekranCenterY + 670);
-        return "Tak"
+        //koniecGry = true;
     }
     if (kierunek === "odswiez") {
         odswiez();
     }
 
     if (kierunek === "zatrzymaj") {
-        if (koniecGry = false) {
-            koniecGry = true;
-            //laczMenu();
-        } // else {
-        //    koniecgry = false;
-        //}
-    }
+        //if (koniecGry = false) {
+        //koniecGry = true;
+        //laczMenu();
+    } // else {
+    //    koniecgry = false;
+    //}
 };
 
 let mouseX = 0;

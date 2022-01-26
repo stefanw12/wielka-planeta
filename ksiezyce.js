@@ -1,10 +1,10 @@
-let Ksiezyc = function (x, y) {
-    this.rozmiar = Math.floor(50 + Math.random() * 50);
+let Ksiezyc = function(x, y, rozmiar) {
+    this.rozmiar = rozmiar;
     this.x = x;
     this.y = y;
 };
 
-Ksiezyc.prototype.rysuj = function () {
+Ksiezyc.prototype.rysuj = function() {
     ctx.save();
     this.czyMozeBycTenRiozmair = this.rozmiar - 5 > 50 ? 5 : 0;
     okrag(this.x, this.y, "gray", this.rozmiar, true);
@@ -15,7 +15,7 @@ Ksiezyc.prototype.rysuj = function () {
     ctx.restore();
 };
 
-let generujKsieżyc = function () {
+let generujKsiezyc = function() {
     let newX = 0;
     let newY = 0;
     let kolizjaKsiezyce = false;
@@ -34,7 +34,13 @@ let generujKsieżyc = function () {
         kolizjaPlanety = planety.some(planeta => {
             return pointInCircle(newX, newY, planeta.x, planeta.y, planeta.rozmiar, rozmiar);
         });
+        planety.forEach(element => {
+            if (!element.CzyMaKsiezyc) {
+                element.CzyMaKsiezyc = true;
+
+            }
+        })
     } while (kolizjaKsiezyce || kolizjaGwiazdy || kolizjaPlanety);
-    let ksiezyc = new Ksiezyc(newX, newY, rozmiar, Math.floor(50 + Math.random() * 50));
+    let ksiezyc = new Ksiezyc(newX, newY, rozmiar);
     return ksiezyc;
 };
