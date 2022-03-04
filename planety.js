@@ -1,11 +1,15 @@
 let koniecGry = false;
 let ksiezyce = [];
-let Planeta = function(x, y, rozmiar) {
+
+let Planeta = function(x, y, rozmiar, czyMaKsiezyc) {
     this.x = x;
     this.y = y;
     this.planetaRozmiar = rozmiar;
-    this.ksiezyc = generujKsiezyc();
-    ksiezyce.push(this.ksiezyc);
+    this.czyMaKsiezyc = czyMaKsiezyc
+    if (czyMaKsiezyc) {
+        this.ksiezyc = generujKsiezyc();
+        ksiezyce.push(this.ksiezyc);
+    }
 };
 
 Planeta.prototype.rysuj = function() {
@@ -18,7 +22,10 @@ Planeta.prototype.rysuj = function() {
         okrag(this.x, this.y, kolor, rozmiar, true);
     }
     ctx.restore();
-    this.ksiezyc.rysuj();
+    if (this.czyMaKsiezyc) {
+        console.log(this.ksiezyc);
+        this.ksiezyc.rysuj();
+    }
 };
 
 Planeta.prototype.sprawdzCzyJestesWiekszyOdSceny = function() {
@@ -121,4 +128,11 @@ Planeta.prototype.przesuwaniePalcem = function(timeDiff) {
 
 Planeta.prototype.sprawdzKolizje = function(x, y, promien, drugiObjektX, drugiObjektY, drugiObjektPromien) {
     return Math.sqrt(Math.pow(x - drugiObjektX, 2) + Math.pow(y - drugiObjektY, 2)) < promien + drugiObjektPromien;
+};
+
+Planeta.prototype.sprawdzajKsiezyc = function() {
+    if (this.ksiezyc in ksiezyce) {
+        return "";
+    }
+    this.ksiezyc = {};
 };

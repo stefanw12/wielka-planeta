@@ -34,12 +34,11 @@ let generujKsiezyc = function() {
         kolizjaPlanety = planety.some(planeta => {
             return pointInCircle(newX, newY, planeta.x, planeta.y, planeta.rozmiar, rozmiar);
         });
-        planety.forEach(element => {
+        /*planety.forEach(element => {
             if (!element.CzyMaKsiezyc) {
                 element.CzyMaKsiezyc = true;
-
             }
-        })
+        });*/
     } while (kolizjaKsiezyce || kolizjaGwiazdy || kolizjaPlanety);
     let ksiezyc = new Ksiezyc(newX, newY, rozmiar);
     return ksiezyc;

@@ -22,6 +22,7 @@ let centerY = bufferHeight / 2;
 let worldX = 0;
 let worldY = 0;
 let planetyZKsiezycami = [];
+let planeta = new Planeta(ekranCenterX - 500, ekranCenterY, 50, false);
 
 let bufferCanvas = document.createElement("canvas");
 bufferCanvas.width = bufferWidth;
@@ -127,7 +128,7 @@ let generujPlanete = function() {
         });
 
     } while (kolizjaGwiazdy || kolizjaPlanety);
-    let planeta = new Planeta(newX, newY, rozmiar, Math.floor(50 + Math.random() * 50));
+    let planeta = new Planeta(newX, newY, rozmiar, true);
     return planeta;
 };
 
@@ -135,6 +136,8 @@ let planety = [];
 for (let i = 0; i < 10; i++) {
     planety.push(generujPlanete());
 }
+let niczyjKsiezyc = generujKsiezyc();
+ksiezyce.push(niczyjKsiezyc);
 
 // let ksiezyce = [];
 // for (let i = 0; i < 10; i++) {
@@ -187,11 +190,11 @@ let narysujStrzalki = function() {
     kwadratZeStrzalka("gora");
 }
 
-$("body").bind("vmousemove", function(event) {
+/*$("body").bind("vmousemove", function(event) {
     let mouseYTest = event.clientY;
     let mouseXTest = event.clientX;
     console.log(`${mouseXTest} ${mouseYTest}`)
-});
+});*/
 
 function ensureVehicleInBounds() {
     if (planeta.x < planeta.planetaRozmiar) {
@@ -223,8 +226,7 @@ function updateWorldCoords() {
         worldY = -bufferHeight + ekranCenterY * 2;
     }
 }
-
-let planeta = new Planeta(ekranCenterX - 500, ekranCenterY, 50);
+1
 
 let gra = function(lastTime) {
     let time = Date.now();
@@ -248,6 +250,7 @@ let gra = function(lastTime) {
     }
 
     for (let i = 0; i < planety.length; i++) {
+        console.log(planety[i].ksiezyc);
         planety[i].rysuj();
     }
 
@@ -258,6 +261,10 @@ let gra = function(lastTime) {
     for (let i = 0; i < asteroidy.length; i++) {
         asteroidy[i].rysuj();
     }
+
+    planety.forEach(element => {
+        element.sprawdzajKsiezyc();
+    });
 
     planeta.rysuj();
     plotnoCtx.clearRect(0, 0, plotno.width, plotno.height);
