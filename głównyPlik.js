@@ -1,3 +1,4 @@
+console.log("testy");
 let startTime = Date.now();
 let plotno = document.getElementById("plotno");
 let plotnoCtx = plotno.getContext("2d");
