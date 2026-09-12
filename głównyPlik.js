@@ -190,7 +190,7 @@ let narysujStrzalki = function() {
 $("body").bind("vmousemove", function(event) {
     let mouseYTest = event.clientY;
     let mouseXTest = event.clientX;
-    console.log(`${mouseXTest} ${mouseYTest}`)
+    //console.log(`${mouseXTest} ${mouseYTest}`)
 });
 
 function ensureVehicleInBounds() {
@@ -242,6 +242,7 @@ let gra = function(lastTime) {
 
     gwiazdka(50, 50, 0.7);
     gwiazdka(500, 300, 1.2);
+    console.log(worldX)
 
     for (let i = 0; i < gwiazdy.length; i++) {
         gwiazdy[i].rysuj();
