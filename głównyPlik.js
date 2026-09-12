@@ -242,7 +242,7 @@ let gra = function(lastTime) {
 
     gwiazdka(50, 50, 0.7);
     gwiazdka(500, 300, 1.2);
-    console.log(worldX)
+    //console.log(worldX)
 
     for (let i = 0; i < gwiazdy.length; i++) {
         gwiazdy[i].rysuj();
